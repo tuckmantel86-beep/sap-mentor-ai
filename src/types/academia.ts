@@ -1,5 +1,4 @@
-// ─── TIPOS DA ACADEMIA SAP ────────────────────────────────────────────────────
-// Arquivo separado para evitar problemas de cache no Vite
+// TIPOS DA ACADEMIA SAP - arquivo separado
 
 export type ModuloAcademia = 'MM' | 'FI' | 'SD' | 'CO' | 'HCM' | 'GERAL'
 export type TipoSecao = 'teoria' | 'print' | 'destaque' | 'dica' | 'atencao' | 'pratica' | 'resumo' | 'exercicio'

@@ -1,8 +1,8 @@
 import { Aula, TrilhaAcademia } from '../types/academia'
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TRILHA 1 — INICIANTE (Estagiário)
-// ─────────────────────────────────────────────────────────────────────────────
+
+// TRILHA 1 INICIANTE (Estagi rio)
+
 
 export const AULA_N1_001: Aula = {
   id: 'ACAD-N1-001',
@@ -582,9 +582,9 @@ export const AULA_N1_005: Aula = {
   ],
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 // TRILHAS DE CARREIRA DA ACADEMIA
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 export const TRILHA_INICIANTE: TrilhaAcademia = {
   id: 'trilha-iniciante',
