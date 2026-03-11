@@ -24,13 +24,6 @@ interface MentorState {
   limparChat: () => void
 }
 
-const SYSTEM_PROMPT = `Você é um consultor SAP sênior com 20 anos de experiência atuando como mentor de treinamento.
-Seu papel é ajudar usuários que possuem SAP GUI instalado no computador a executar tarefas reais.
-Você NÃO simula o SAP. Você orienta o usuário a executar tarefas no SAP real.
-Responda sempre em português brasileiro, de forma clara, profissional e didática.
-Quando explicar passos, seja específico sobre campos e valores do SAP.
-Se o usuário estiver travado, explique o conceito de negócio por trás da ação antes de dar o passo técnico.`
-
 export const useMentorStore = create<MentorState>((set) => ({
   mensagens: [],
   carregando: false,

@@ -396,7 +396,7 @@ export default function AulaPage() {
         const ordemAtual = NIVEL_ORDEM[nivelUsuario]
         const ordemTrilha = NIVEL_ORDEM[trilha.nivel]
         if (ordemTrilha >= ordemAtual) {
-          updateUser({ nivel: proximoNivel as string })
+          updateUser({ nivel: proximoNivel })
         }
       }
     }

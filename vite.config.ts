@@ -22,7 +22,7 @@ const mentorApiPlugin = () => ({
       req.on('data', (chunk: Buffer) => { body += chunk.toString() })
       req.on('end', async () => {
         try {
-          const { pergunta, contexto, arquivo, idioma = 'pt-BR' } = JSON.parse(body)
+          const { pergunta, contexto, arquivo } = JSON.parse(body)
 
           if (!pergunta) {
             res.writeHead(400, { 'Content-Type': 'application/json' })
@@ -127,7 +127,7 @@ ${contexto ? `\nContexto da missão atual: ${contexto}` : ''}`
  * Groq API (grátis, rápido) - Primeiro na cascata
  * Modelos disponíveis: llama3-70b-8192, llama-3.1-70b-versatile, mixtral-8x7b-32768 (deprecated)
  */
-async function callGroq(apiKey: string, pergunta: string, arquivo: any, systemPrompt: string): Promise<string | null> {
+async function callGroq(apiKey: string, pergunta: string, _arquivo: { tipo: string; dados: string; nome: string } | null, systemPrompt: string): Promise<string | null> {
   try {
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -164,7 +164,7 @@ async function callGroq(apiKey: string, pergunta: string, arquivo: any, systemPr
  * Gemini API (grátis do Google) - Segunda na cascata
  * Modelo: gemini-1.5-flash (v1beta - mais novo e estável)
  */
-async function callGemini(apiKey: string, pergunta: string, arquivo: any, systemPrompt: string): Promise<string | null> {
+async function callGemini(apiKey: string, pergunta: string, _arquivo: { tipo: string; dados: string; nome: string } | null, systemPrompt: string): Promise<string | null> {
   try {
     const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
@@ -244,7 +244,8 @@ async function callClaude(apiKey: string, pergunta: string, systemPrompt: string
 /**
  * Claude API com Vision para analisar imagens
  */
-async function callClaudeWithVision(apiKey: string, pergunta: string, arquivo: any, systemPrompt: string): Promise<string | null> {
+async function callClaudeWithVision(apiKey: string, pergunta: string, arquivo: { tipo: string; dados: string; nome: string } | null, systemPrompt: string): Promise<string | null> {
+  if (!arquivo) return null
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -329,7 +330,8 @@ async function callOpenAI(apiKey: string, pergunta: string, systemPrompt: string
 /**
  * OpenAI API com Vision para analisar imagens
  */
-async function callOpenAIWithVision(apiKey: string, pergunta: string, arquivo: any, systemPrompt: string): Promise<string | null> {
+async function callOpenAIWithVision(apiKey: string, pergunta: string, arquivo: { tipo: string; dados: string; nome: string } | null, systemPrompt: string): Promise<string | null> {
+  if (!arquivo) return null
   try {
     const r = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

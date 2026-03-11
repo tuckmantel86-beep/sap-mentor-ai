@@ -78,10 +78,9 @@ function CardAula({ aula, index, onClick }: { aula: Aula; index: number; onClick
   )
 }
 
-function CardTrilha({ trilha, status, onClick }: {
+function CardTrilha({ trilha, status }: {
   trilha: TrilhaAcademia
   status: 'atual' | 'bloqueada' | 'concluida'
-  onClick: () => void
 }) {
   const navigate = useNavigate()
   const [expanded, setExpanded] = useState(false)
@@ -222,7 +221,6 @@ function CardTrilha({ trilha, status, onClick }: {
 }
 
 export default function AcademiaPage() {
-  const navigate = useNavigate()
   const { user } = useAuthStore()
   const nivelUsuario: NivelCarreira = (user?.nivel as NivelCarreira) || 'estagiario'
 
@@ -303,7 +301,6 @@ export default function AcademiaPage() {
                 key={trilha.id}
                 trilha={trilha}
                 status={status}
-                onClick={() => trilha.aulas.length > 0 && navigate(`/academia/${trilha.aulas[0].id}`)}
               />
             )
           })}
