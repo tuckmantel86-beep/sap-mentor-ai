@@ -1,4 +1,4 @@
-import { Aula, TrilhaAcademia } from '../types'
+import { Aula, TrilhaAcademia } from '../types/academia'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TRILHA 1 — INICIANTE (Estagiário)
