@@ -18,7 +18,7 @@ import {
   Image,
 } from 'lucide-react'
 import { getAulaPorId, TODAS_TRILHAS } from '../data/academia'
-import { SecaoAula, TipoSecao } from '../types/academia'
+import { SecaoAula, TipoSecao } from '../data/academia'
 
 // ─── Ícone por tipo de seção ──────────────────────────────────────────────────
 const ICONE_SECAO: Record<TipoSecao, React.ReactNode> = {
