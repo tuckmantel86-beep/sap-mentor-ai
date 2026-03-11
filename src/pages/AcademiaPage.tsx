@@ -7,7 +7,6 @@ import {
   Lock,
   CheckCircle2,
   PlayCircle,
-  Star,
   Layers,
   ArrowRight,
 } from 'lucide-react'
@@ -41,11 +40,6 @@ function BadgeNivel({ titulo, cor }: { titulo: string; cor: string }) {
 }
 
 function CardAula({ aula, index, onClick }: { aula: Aula; index: number; onClick: () => void }) {
-  const temPrints = aula.prints_necessarios > 0
-  const printsPendentes = aula.secoes.filter(
-    s => s.tipo === 'print' && !s.placeholder?.imagem_url
-  ).length
-
   return (
     <button
       onClick={onClick}
@@ -68,12 +62,6 @@ function CardAula({ aula, index, onClick }: { aula: Aula; index: number; onClick
             <Clock size={11} />
             {aula.tempo_estimado_minutos} min
           </span>
-          {temPrints && (
-            <span className={`flex items-center gap-1 text-xs ${printsPendentes > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
-              <Star size={11} />
-              {printsPendentes > 0 ? `${printsPendentes} prints pendentes` : 'Prints prontos'}
-            </span>
-          )}
           {aula.transacoes.length > 0 && (
             <span className="flex items-center gap-1 text-slate-500 text-xs">
               <Layers size={11} />
@@ -233,7 +221,7 @@ export default function AcademiaPage() {
                 </div>
               </div>
               <p className="text-slate-300 text-sm max-w-2xl leading-relaxed">
-                Aprenda SAP GUI 770 com aulas estruturadas, prints reais do sistema e
+                Aprenda SAP GUI com aulas estruturadas, exemplos reais do sistema e
                 explicações contextualizadas no mundo corporativo. Cada trilha prepara você
                 para o próximo nível da carreira.
               </p>
@@ -264,9 +252,8 @@ export default function AcademiaPage() {
             <div>
               <p className="text-blue-300 text-sm font-medium">Como funciona a Academia?</p>
               <p className="text-slate-400 text-xs mt-0.5 leading-relaxed">
-                As aulas ensinam teoria e mostram marcações exatas de onde adicionar prints reais
-                do SAP. Você tira os prints no seu SAP GUI 770 e os conteúdos ficam completos e
-                personalizados para a sua empresa.
+                As aulas combinam teoria e prática com imagens reais do SAP GUI, ensinando
+                cada passo com o contexto de situações reais do dia a dia corporativo.
               </p>
             </div>
           </div>
@@ -300,7 +287,7 @@ export default function AcademiaPage() {
         {/* Rodapé motivacional */}
         <div className="mt-10 text-center py-8 border-t border-slate-800">
           <p className="text-slate-500 text-sm">
-            💡 Cada aula desta Academia usa prints reais do SAP GUI 770 para garantir máxima precisão.
+            💡 Cada aula desta Academia é baseada em situações reais do ambiente corporativo SAP.
           </p>
           <p className="text-slate-600 text-xs mt-1">
             As aulas dos Níveis 2-5 estão em desenvolvimento e serão lançadas em breve.
