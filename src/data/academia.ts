@@ -91,7 +91,8 @@ export const AULA_N1_001: Aula = {
       tipo: 'print',
       placeholder: {
         id: 'print-n1-001-01',
-        instrucao_capture: 'Abra o SAP GUI 770, faça login e tire um print da tela inicial completa (SAP Easy Access). Certifique-se de que apareça: a barra de menu superior (Sistema, Ajuda...), a barra de ferramentas com os botões (salvar, voltar, etc.), o Campo de Comando no canto superior esquerdo (caixinha com cursor), e a árvore de menus à esquerda (Favoritos, Menu SAP).',
+        instrucao_capture: '',
+        imagem_url: '/academia/aula1/print-01-tela-inicial.png',
         legenda: 'A tela inicial do SAP GUI 770 — chamada de SAP Easy Access. Repare nos 4 elementos marcados: ① Campo de Comando (onde você digita T-Codes), ② Barra de Ferramentas (atalhos rápidos), ③ Barra de Menu superior, ④ Árvore de navegação com Favoritos e Menu SAP.',
       },
     },
@@ -121,7 +122,8 @@ export const AULA_N1_001: Aula = {
       tipo: 'print',
       placeholder: {
         id: 'print-n1-001-02',
-        instrucao_capture: 'Clique com o mouse dentro do Campo de Comando (a caixinha no canto superior esquerdo) para posicionar o cursor nele. Em seguida, tire um print aproximado desta área, mostrando claramente o campo com o cursor piscando. Se quiser, use a Ferramenta de Captura do Windows para adicionar uma seta vermelha apontando para o campo.',
+        instrucao_capture: '',
+        imagem_url: '/academia/aula1/print-02-campo-comando.png',
         legenda: 'O Campo de Comando com o cursor ativo. É aqui que toda a magia acontece: você digita o T-Code desejado e pressiona Enter para ir direto à tela certa, sem passar por menus.',
       },
     },
@@ -138,8 +140,9 @@ export const AULA_N1_001: Aula = {
       tipo: 'print',
       placeholder: {
         id: 'print-n1-001-03',
-        instrucao_capture: 'Tire um print focado na parte inferior da tela do SAP, mostrando a Barra de Status completa. Ela fica na faixa cinza/azul na base da janela. Use zoom ou a ferramenta de captura para que o texto fique legível. Destaque (com seta ou caixa vermelha) a área onde aparecem as mensagens do sistema.',
-        legenda: 'A Barra de Status do SAP GUI 770. À esquerda aparece o nome da transação atual. No centro, as mensagens do sistema (em verde = sucesso, em vermelho = erro). À direita, informações do servidor e cliente.',
+        instrucao_capture: '',
+        imagem_url: '/academia/aula1/print-03-barra-status.png',
+        legenda: 'A Barra de Status do SAP GUI 770. À esquerda aparece o nome da transação atual (SESSION_MANAGER). No centro, as mensagens do sistema (em verde = sucesso, em vermelho = erro). À direita, informações do servidor e cliente.',
       },
     },
     {
