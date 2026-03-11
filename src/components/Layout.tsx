@@ -1,5 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, User, LogOut, Cpu } from 'lucide-react'
+import { LayoutDashboard, BookOpen, User, LogOut, Cpu, GraduationCap } from 'lucide-react'
 import { useAuthStore } from '../store/useAuthStore'
 
 export default function Layout() {
@@ -44,6 +44,10 @@ export default function Layout() {
           <NavLink to="/missoes" className={navClass}>
             <BookOpen size={18} />
             Missões
+          </NavLink>
+          <NavLink to="/academia" className={navClass}>
+            <GraduationCap size={18} />
+            Academia
           </NavLink>
           <NavLink to="/perfil" className={navClass}>
             <User size={18} />
