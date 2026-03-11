@@ -138,58 +138,68 @@ function CardTrilha({ trilha, status, onClick }: {
       <div className="p-5">
         <p className="text-slate-400 text-sm mb-4">{trilha.descricao}</p>
 
-        {trilha.prerequisito && !concluida && (
-          <div className="flex items-center gap-2 text-xs text-amber-400/80 bg-amber-400/10 rounded-lg px-3 py-2 mb-4">
-            <Lock size={12} />
-            <span>Pré-requisito: {trilha.prerequisito}</span>
-          </div>
-        )}
-
-        {/* Lista de aulas */}
-        {aulasComConteudo ? (
-          <div className="space-y-2">
-            {trilha.aulas.slice(0, 3).map((aula, i) => (
-              <CardAula
-                key={aula.id}
-                aula={aula}
-                index={i}
-                onClick={() => !bloqueada && navigate(`/academia/${aula.id}`)}
-              />
-            ))}
-            {trilha.aulas.length > 3 && (
-              <button
-                onClick={() => !bloqueada && onClick()}
-                disabled={bloqueada}
-                className="w-full text-center text-sm text-slate-500 hover:text-blue-400 transition-colors py-2 disabled:cursor-not-allowed"
-              >
-                + {trilha.aulas.length - 3} aulas a mais → Ver trilha completa
-              </button>
+        {/* Trilha BLOQUEADA: mostra cadeado e pré-requisito */}
+        {bloqueada ? (
+          <div className="flex flex-col items-center justify-center py-6 text-center">
+            <div className="w-14 h-14 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center mb-3">
+              <Lock size={26} className="text-slate-500" />
+            </div>
+            {trilha.prerequisito && (
+              <div className="flex items-center gap-2 text-xs text-amber-400/80 bg-amber-400/10 border border-amber-400/20 rounded-lg px-3 py-2 mb-2">
+                <Lock size={11} />
+                <span>Conclua primeiro: {trilha.prerequisito}</span>
+              </div>
             )}
+            <p className="text-slate-500 text-xs mt-1">Conclua a trilha anterior para desbloquear</p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-6 text-center">
-            <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center mb-3">
-              <GraduationCap size={24} className="text-slate-500" />
-            </div>
-            <p className="text-slate-400 text-sm font-medium">Em Desenvolvimento</p>
-            <p className="text-slate-600 text-xs mt-1">As aulas deste nível estão sendo preparadas</p>
-          </div>
-        )}
+          <>
+            {/* Lista de aulas quando DESBLOQUEADA */}
+            {aulasComConteudo ? (
+              <div className="space-y-2">
+                {trilha.aulas.slice(0, 3).map((aula, i) => (
+                  <CardAula
+                    key={aula.id}
+                    aula={aula}
+                    index={i}
+                    onClick={() => navigate(`/academia/${aula.id}`)}
+                  />
+                ))}
+                {trilha.aulas.length > 3 && (
+                  <button
+                    onClick={onClick}
+                    className="w-full text-center text-sm text-slate-500 hover:text-blue-400 transition-colors py-2"
+                  >
+                    + {trilha.aulas.length - 3} aulas a mais → Ver trilha completa
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-6 text-center">
+                <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center mb-3">
+                  <GraduationCap size={24} className="text-slate-500" />
+                </div>
+                <p className="text-slate-400 text-sm font-medium">Em Desenvolvimento</p>
+                <p className="text-slate-600 text-xs mt-1">As aulas deste nível estão sendo preparadas</p>
+              </div>
+            )}
 
-        {/* CTA */}
-        {!bloqueada && aulasComConteudo && (
-          <button
-            onClick={() => navigate(`/academia/${trilha.aulas[0].id}`)}
-            className={`mt-4 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-medium text-sm transition-all ${
-              concluida
-                ? 'bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30'
-                : 'bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-600/20'
-            }`}
-          >
-            <PlayCircle size={16} />
-            {concluida ? 'Revisar Trilha' : 'Começar Trilha'}
-            <ArrowRight size={14} />
-          </button>
+            {/* CTA */}
+            {aulasComConteudo && (
+              <button
+                onClick={() => navigate(`/academia/${trilha.aulas[0].id}`)}
+                className={`mt-4 w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-medium text-sm transition-all ${
+                  concluida
+                    ? 'bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30'
+                    : 'bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-600/20'
+                }`}
+              >
+                <PlayCircle size={16} />
+                {concluida ? 'Revisar Trilha' : 'Começar Trilha'}
+                <ArrowRight size={14} />
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
