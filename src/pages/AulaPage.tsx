@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { getAulaPorId, TODAS_TRILHAS } from '../data/academia'
 import type { SecaoAula, TipoSecao } from '../data/academia'
+import { getAulaImage } from '../data/academia-images'
 
 // ─── Ícone por tipo de seção ──────────────────────────────────────────────────
 const ICONE_SECAO: Record<TipoSecao, React.ReactNode> = {
@@ -43,59 +44,72 @@ const COR_SECAO: Record<TipoSecao, string> = {
   exercicio: 'border-pink-500/30 bg-pink-500/5',
 }
 
-// ─── Bloco de Placeholder de Print ────────────────────────────────────────────
+// ─── Bloco de Print: imagem real com frame do site ───────────────────────────
 function BlocoPrint({ secao }: { secao: SecaoAula }) {
   const { placeholder } = secao
   if (!placeholder) return null
 
-  const temImagem = !!placeholder.imagem_url
+  // Prioridade: imagem_url do placeholder → mapeamento automático dos PDFs
+  const imgUrl = placeholder.imagem_url || getAulaImage(placeholder.id)
+  const temImagem = !!imgUrl
 
   return (
-    <div className={`rounded-xl border-2 border-dashed overflow-hidden ${
-      temImagem ? 'border-emerald-500/40' : 'border-amber-500/40'
+    <div className={`rounded-xl overflow-hidden border ${
+      temImagem
+        ? 'border-slate-700 bg-slate-950/80'
+        : 'border-dashed border-amber-500/40'
     }`}>
       {temImagem ? (
-        <div className="relative">
-          <img
-            src={placeholder.imagem_url}
-            alt={placeholder.legenda}
-            className="w-full object-contain max-h-[500px] bg-slate-950"
-          />
-          <div className="bg-slate-900 border-t border-slate-700 px-4 py-2">
-            <p className="text-slate-400 text-xs italic">{placeholder.legenda}</p>
-          </div>
-        </div>
-      ) : (
-        <div className="p-5">
-          {/* Badge */}
-          <div className="flex items-center gap-2 mb-3">
-            <Camera size={18} className="text-amber-400" />
-            <span className="text-amber-400 font-semibold text-sm">Print Necessário</span>
+        <>
+          {/* Header do frame no estilo site */}
+          <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-red-500/70" />
+              <div className="w-2 h-2 rounded-full bg-amber-500/70" />
+              <div className="w-2 h-2 rounded-full bg-emerald-500/70" />
+              <span className="ml-2 text-slate-500 text-xs font-mono">SAP GUI 7.70</span>
+            </div>
+            <span className="text-slate-600 text-xs font-mono">
+              {placeholder.id.replace('print-', '').toUpperCase()}
+            </span>
           </div>
 
-          {/* Instrução de captura */}
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 mb-3">
-            <p className="text-amber-400/90 text-xs font-medium mb-1">📸 O que você precisa capturar:</p>
-            <p className="text-slate-300 text-sm leading-relaxed">{placeholder.instrucao_capture}</p>
+          {/* Imagem com frame adaptado ao site escuro */}
+          <div className="relative bg-slate-950 flex items-center justify-center p-0">
+            <img
+              src={imgUrl}
+              alt={placeholder.legenda}
+              className="w-full object-contain"
+              style={{ maxHeight: '520px' }}
+            />
           </div>
 
-          {/* Área de imagem vazia */}
-          <div className="bg-slate-800/50 rounded-lg border border-dashed border-slate-600 flex flex-col items-center justify-center py-10 gap-3">
-            <Image size={36} className="text-slate-600" />
-            <div className="text-center">
-              <p className="text-slate-500 text-sm font-medium">Aguardando seu print real do SAP GUI 770</p>
-              <p className="text-slate-600 text-xs mt-1">
-                Tire o print conforme as instruções acima e envie ao seu instrutor para montar a aula completa
-              </p>
+          {/* Legenda no estilo site */}
+          <div className="bg-slate-900/80 border-t border-slate-800 px-4 py-3">
+            <div className="flex items-start gap-2">
+              <Camera size={13} className="text-amber-400 mt-0.5 shrink-0" />
+              <p className="text-slate-400 text-xs leading-relaxed italic">{placeholder.legenda}</p>
             </div>
           </div>
-
-          {/* Legenda que vai aparecer */}
-          <div className="mt-3 px-1">
-            <p className="text-slate-500 text-xs">
-              <span className="text-slate-400 font-medium">Legenda:</span> {placeholder.legenda}
-            </p>
+        </>
+      ) : (
+        /* Placeholder quando não há imagem disponível */
+        <div className="p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Camera size={18} className="text-amber-400" />
+            <span className="text-amber-400 font-semibold text-sm">Print do SAP necessário</span>
           </div>
+          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 mb-3">
+            <p className="text-amber-400/90 text-xs font-medium mb-1">📸 O que capturar:</p>
+            <p className="text-slate-300 text-sm leading-relaxed">{placeholder.instrucao_capture}</p>
+          </div>
+          <div className="bg-slate-800/50 rounded-lg border border-dashed border-slate-600 flex flex-col items-center justify-center py-10 gap-3">
+            <Image size={36} className="text-slate-600" />
+            <p className="text-slate-500 text-sm">Aguardando print real do SAP GUI 770</p>
+          </div>
+          <p className="text-slate-500 text-xs mt-3">
+            <span className="text-slate-400 font-medium">Legenda:</span> {placeholder.legenda}
+          </p>
         </div>
       )}
     </div>
