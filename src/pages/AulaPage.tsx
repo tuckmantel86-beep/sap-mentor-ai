@@ -188,9 +188,6 @@ export default function AulaPage() {
 
   const aulaAnterior = aula.aula_anterior_id ? getAulaPorId(aula.aula_anterior_id) : null
   const proximaAula = aula.proxima_aula_id ? getAulaPorId(aula.proxima_aula_id) : null
-  const printsPendentes = aula.secoes.filter(
-    s => s.tipo === 'print' && !s.placeholder?.imagem_url
-  ).length
   const totalPrints = aula.secoes.filter(s => s.tipo === 'print').length
 
   return (
@@ -251,14 +248,12 @@ export default function AulaPage() {
               <FileText size={15} />
               {aula.secoes.length} seções
             </div>
-            <div className={`flex items-center gap-1.5 text-sm ${
-              printsPendentes > 0 ? 'text-amber-400' : 'text-emerald-400'
-            }`}>
-              <Camera size={15} />
-              {printsPendentes > 0
-                ? `${printsPendentes}/${totalPrints} prints pendentes`
-                : `${totalPrints} prints prontos ✓`}
-            </div>
+            {totalPrints > 0 && (
+              <div className="flex items-center gap-1.5 text-sm text-emerald-400">
+                <Camera size={15} />
+                {totalPrints} prints
+              </div>
+            )}
           </div>
 
           {/* Objetivo */}
@@ -270,16 +265,6 @@ export default function AulaPage() {
             <p className="text-slate-300 text-sm leading-relaxed">{aula.objetivo}</p>
           </div>
 
-          {/* Aviso de prints pendentes */}
-          {printsPendentes > 0 && (
-            <div className="mt-3 flex items-start gap-2 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3">
-              <Camera size={16} className="text-amber-400 flex-shrink-0 mt-0.5" />
-              <p className="text-amber-400/90 text-xs">
-                Esta aula tem <strong>{printsPendentes} ponto(s)</strong> aguardando prints reais do SAP GUI 770.
-                Tire os prints conforme as instruções em cada seção e envie para completar a aula.
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Conteúdo das seções */}
