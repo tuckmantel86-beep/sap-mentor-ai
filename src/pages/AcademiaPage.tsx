@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { TODAS_TRILHAS } from '../data/academia'
-import { TrilhaAcademia, Aula, NivelCarreiraAcad as NivelCarreira } from '../data/academia'
+import type { TrilhaAcademia, Aula, NivelCarreiraAcad as NivelCarreira } from '../data/academia'
 import { useAuthStore } from '../store/useAuthStore'
 
 const NIVEL_ORDEM: Record<NivelCarreira, number> = {
