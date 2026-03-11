@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import {
   GraduationCap,
   BookOpen,
@@ -9,6 +10,7 @@ import {
   PlayCircle,
   Layers,
   ArrowRight,
+  ChevronDown,
 } from 'lucide-react'
 import { TODAS_TRILHAS } from '../data/academia'
 import type { TrilhaAcademia, Aula, NivelCarreiraAcad as NivelCarreira } from '../data/academia'
@@ -82,6 +84,7 @@ function CardTrilha({ trilha, status, onClick }: {
   onClick: () => void
 }) {
   const navigate = useNavigate()
+  const [expanded, setExpanded] = useState(false)
   const bloqueada = status === 'bloqueada'
   const concluida = status === 'concluida'
   const aulasComConteudo = trilha.aulas.length > 0
@@ -157,20 +160,32 @@ function CardTrilha({ trilha, status, onClick }: {
             {/* Lista de aulas quando DESBLOQUEADA */}
             {aulasComConteudo ? (
               <div className="space-y-2">
-                {trilha.aulas.slice(0, 3).map((aula, i) => (
-                  <CardAula
-                    key={aula.id}
-                    aula={aula}
-                    index={i}
-                    onClick={() => navigate(`/academia/${aula.id}`)}
-                  />
-                ))}
+                {trilha.aulas
+                  .slice(0, expanded ? trilha.aulas.length : 3)
+                  .map((aula, i) => (
+                    <CardAula
+                      key={aula.id}
+                      aula={aula}
+                      index={i}
+                      onClick={() => navigate(`/academia/${aula.id}`)}
+                    />
+                  ))}
                 {trilha.aulas.length > 3 && (
                   <button
-                    onClick={onClick}
-                    className="w-full text-center text-sm text-slate-500 hover:text-blue-400 transition-colors py-2"
+                    onClick={() => setExpanded(!expanded)}
+                    className="w-full text-center text-sm text-slate-500 hover:text-blue-400 transition-colors py-3 flex items-center justify-center gap-2 font-medium"
                   >
-                    + {trilha.aulas.length - 3} aulas a mais → Ver trilha completa
+                    {expanded ? (
+                      <>
+                        <ChevronDown size={16} className="rotate-180" />
+                        Colapsar aulas
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown size={16} />
+                        Ver todas as {trilha.aulas.length} aulas
+                      </>
+                    )}
                   </button>
                 )}
               </div>
