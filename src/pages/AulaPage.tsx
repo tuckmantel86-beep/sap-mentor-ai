@@ -360,9 +360,16 @@ export default function AulaPage() {
   }
 
   const aulaAnterior = aula.aula_anterior_id ? getAulaPorId(aula.aula_anterior_id) : null
-  const proximaAula = aula.proxima_aula_id ? getAulaPorId(aula.proxima_aula_id) : null
+  const proximaAulaRaw = aula.proxima_aula_id ? getAulaPorId(aula.proxima_aula_id) : null
   const totalPrints = aula.secoes.filter(s => s.tipo === 'print').length
-  const ehUltimaAula = !proximaAula
+
+  // É a última aula da trilha se não há próxima, ou se a próxima pertence a outra trilha
+  const proximaAulaMesmaTrilha =
+    proximaAulaRaw && trilha && trilha.aulas.some(a => a.id === proximaAulaRaw.id)
+      ? proximaAulaRaw
+      : null
+  const ehUltimaAula = !proximaAulaMesmaTrilha
+  const proximaAula = proximaAulaMesmaTrilha
 
   // Próxima trilha para o modal
   const proximaTrilhaInfo = (() => {
